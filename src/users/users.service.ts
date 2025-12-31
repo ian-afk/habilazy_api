@@ -3,6 +3,7 @@ import { UsersRepository } from './repositories/users.repository';
 import { CreateUserDto } from './dto/create-user.dto';
 
 import { User } from 'src/generated/prisma/client';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -25,5 +26,30 @@ export class UsersService {
     }
 
     return user;
+  }
+
+  async findUserAndUpdate(id: number, updateUserDto: UpdateUserDto) {
+    const isExist = await this.userRepo.findById(id);
+    if (!isExist) {
+      throw new NotFoundException(`User ID ${id} doesn't exists`);
+    }
+
+    const user = await this.userRepo.findByIdAndUpdate(id, updateUserDto);
+
+    return user;
+  }
+
+  async findUserAndDelete(id: number) {
+    const isExist = await this.userRepo.findById(id);
+
+    if (!isExist) {
+      throw new NotFoundException(`User ID ${id} doesn't exists`);
+    }
+
+    await this.userRepo.findByIdAndDelete(id);
+
+    return {
+      message: `User deleted successfully`,
+    };
   }
 }
