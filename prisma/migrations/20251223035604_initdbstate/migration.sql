@@ -11,6 +11,7 @@ CREATE TABLE "User" (
 CREATE TABLE "Task" (
     "id" SERIAL NOT NULL,
     "task" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
 
     CONSTRAINT "Task_pkey" PRIMARY KEY ("id")
@@ -18,6 +19,9 @@ CREATE TABLE "Task" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Task_task_key" ON "Task"("task");
 
 -- AddForeignKey
 ALTER TABLE "Task" ADD CONSTRAINT "Task_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

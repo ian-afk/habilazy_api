@@ -5,26 +5,27 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-model Users {
+model User {
   id       Int    @id @default(autoincrement())
   email    String @unique
   password String
 
-  tasks Tasks[]
+  tasks Task[]
 }
 
-model Tasks {
+model Task {
   id          Int    @id @default(autoincrement())
   task        String @unique
   description String
   userId      Int
-  users       Users  @relation(fields: [userId], references: [id])
+  users       User   @relation(fields: [userId], references: [id])
 }
