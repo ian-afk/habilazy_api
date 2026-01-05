@@ -1,9 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UsersRepository } from './repositories/users.repository';
 import { CreateUserDto } from './dto/create-user.dto';
 
 import { User } from 'src/generated/prisma/client';
 import { UpdateUserDto } from './dto/update-user.dto';
+import bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UsersService {
@@ -14,8 +19,25 @@ export class UsersService {
     return users;
   }
   async createUser(createUserDto: CreateUserDto) {
-    const user = this.userRepo.create(createUserDto);
-    return await user;
+    const { email, password } = createUserDto;
+
+    const isEmailExists = await this.userRepo.findByEmail(email);
+
+    if (isEmailExists) {
+      throw new ConflictException(`Email: ${email} already exists`);
+    }
+
+    try {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const user = this.userRepo.create({
+        email,
+        password: hashedPassword,
+      });
+
+      return await user;
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
   async findUserById(id: number): Promise<User | null> {
