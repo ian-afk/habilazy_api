@@ -19,13 +19,25 @@ model User {
   email    String @unique
   password String
 
-  tasks Task[]
+  tasks    Task[]
+  subTasks SubTask[]
 }
 
 model Task {
-  id          Int    @id @default(autoincrement())
-  task        String @unique
+  id          Int       @id @default(autoincrement())
+  task        String    @unique
   description String
   userId      Int
-  users       User   @relation(fields: [userId], references: [id])
+  users       User      @relation(fields: [userId], references: [id])
+  subTasks    SubTask[]
+}
+
+model SubTask {
+  id          Int     @id @default(autoincrement())
+  task        String  @unique
+  description String?
+  taskId      Int
+  tasks       Task    @relation(fields: [taskId], references: [id])
+  userId      Int
+  users       User    @relation(fields: [userId], references: [id])
 }
