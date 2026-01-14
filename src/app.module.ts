@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './prisma/prisma.module';
 import { TaskModule } from './task/task.module';
 import { SubtaskModule } from './subtask/subtask.module';
+import { GoalModule } from './goal/goal.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { SubtaskModule } from './subtask/subtask.module';
     PrismaModule,
     TaskModule,
     SubtaskModule,
+    GoalModule,
   ],
 })
 export class AppModule {}
