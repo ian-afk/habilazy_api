@@ -202,6 +202,7 @@ export type UserWhereInput = {
   password?: Prisma.StringFilter<"User"> | string
   tasks?: Prisma.TaskListRelationFilter
   subTasks?: Prisma.SubTaskListRelationFilter
+  goals?: Prisma.GoalListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -210,6 +211,7 @@ export type UserOrderByWithRelationInput = {
   password?: Prisma.SortOrder
   tasks?: Prisma.TaskOrderByRelationAggregateInput
   subTasks?: Prisma.SubTaskOrderByRelationAggregateInput
+  goals?: Prisma.GoalOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -221,6 +223,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   password?: Prisma.StringFilter<"User"> | string
   tasks?: Prisma.TaskListRelationFilter
   subTasks?: Prisma.SubTaskListRelationFilter
+  goals?: Prisma.GoalListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -248,6 +251,7 @@ export type UserCreateInput = {
   password: string
   tasks?: Prisma.TaskCreateNestedManyWithoutUsersInput
   subTasks?: Prisma.SubTaskCreateNestedManyWithoutUsersInput
+  goals?: Prisma.GoalCreateNestedManyWithoutUsersInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -256,6 +260,7 @@ export type UserUncheckedCreateInput = {
   password: string
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUsersInput
   subTasks?: Prisma.SubTaskUncheckedCreateNestedManyWithoutUsersInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type UserUpdateInput = {
@@ -263,6 +268,7 @@ export type UserUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   tasks?: Prisma.TaskUpdateManyWithoutUsersNestedInput
   subTasks?: Prisma.SubTaskUpdateManyWithoutUsersNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -271,6 +277,7 @@ export type UserUncheckedUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUsersNestedInput
   subTasks?: Prisma.SubTaskUncheckedUpdateManyWithoutUsersNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -333,6 +340,20 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type UserCreateNestedOneWithoutGoalsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutGoalsInput, Prisma.UserUncheckedCreateWithoutGoalsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGoalsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutGoalsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutGoalsInput, Prisma.UserUncheckedCreateWithoutGoalsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGoalsInput
+  upsert?: Prisma.UserUpsertWithoutGoalsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutGoalsInput, Prisma.UserUpdateWithoutGoalsInput>, Prisma.UserUncheckedUpdateWithoutGoalsInput>
+}
+
 export type UserCreateNestedOneWithoutTasksInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutTasksInput, Prisma.UserUncheckedCreateWithoutTasksInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutTasksInput
@@ -361,10 +382,57 @@ export type UserUpdateOneRequiredWithoutSubTasksNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSubTasksInput, Prisma.UserUpdateWithoutSubTasksInput>, Prisma.UserUncheckedUpdateWithoutSubTasksInput>
 }
 
+export type UserCreateWithoutGoalsInput = {
+  email: string
+  password: string
+  tasks?: Prisma.TaskCreateNestedManyWithoutUsersInput
+  subTasks?: Prisma.SubTaskCreateNestedManyWithoutUsersInput
+}
+
+export type UserUncheckedCreateWithoutGoalsInput = {
+  id?: number
+  email: string
+  password: string
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUsersInput
+  subTasks?: Prisma.SubTaskUncheckedCreateNestedManyWithoutUsersInput
+}
+
+export type UserCreateOrConnectWithoutGoalsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutGoalsInput, Prisma.UserUncheckedCreateWithoutGoalsInput>
+}
+
+export type UserUpsertWithoutGoalsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutGoalsInput, Prisma.UserUncheckedUpdateWithoutGoalsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutGoalsInput, Prisma.UserUncheckedCreateWithoutGoalsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutGoalsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutGoalsInput, Prisma.UserUncheckedUpdateWithoutGoalsInput>
+}
+
+export type UserUpdateWithoutGoalsInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  tasks?: Prisma.TaskUpdateManyWithoutUsersNestedInput
+  subTasks?: Prisma.SubTaskUpdateManyWithoutUsersNestedInput
+}
+
+export type UserUncheckedUpdateWithoutGoalsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUsersNestedInput
+  subTasks?: Prisma.SubTaskUncheckedUpdateManyWithoutUsersNestedInput
+}
+
 export type UserCreateWithoutTasksInput = {
   email: string
   password: string
   subTasks?: Prisma.SubTaskCreateNestedManyWithoutUsersInput
+  goals?: Prisma.GoalCreateNestedManyWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutTasksInput = {
@@ -372,6 +440,7 @@ export type UserUncheckedCreateWithoutTasksInput = {
   email: string
   password: string
   subTasks?: Prisma.SubTaskUncheckedCreateNestedManyWithoutUsersInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type UserCreateOrConnectWithoutTasksInput = {
@@ -394,6 +463,7 @@ export type UserUpdateWithoutTasksInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   subTasks?: Prisma.SubTaskUpdateManyWithoutUsersNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTasksInput = {
@@ -401,12 +471,14 @@ export type UserUncheckedUpdateWithoutTasksInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   subTasks?: Prisma.SubTaskUncheckedUpdateManyWithoutUsersNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type UserCreateWithoutSubTasksInput = {
   email: string
   password: string
   tasks?: Prisma.TaskCreateNestedManyWithoutUsersInput
+  goals?: Prisma.GoalCreateNestedManyWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutSubTasksInput = {
@@ -414,6 +486,7 @@ export type UserUncheckedCreateWithoutSubTasksInput = {
   email: string
   password: string
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUsersInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type UserCreateOrConnectWithoutSubTasksInput = {
@@ -436,6 +509,7 @@ export type UserUpdateWithoutSubTasksInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   tasks?: Prisma.TaskUpdateManyWithoutUsersNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubTasksInput = {
@@ -443,6 +517,7 @@ export type UserUncheckedUpdateWithoutSubTasksInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUsersNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 
@@ -453,11 +528,13 @@ export type UserUncheckedUpdateWithoutSubTasksInput = {
 export type UserCountOutputType = {
   tasks: number
   subTasks: number
+  goals: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tasks?: boolean | UserCountOutputTypeCountTasksArgs
   subTasks?: boolean | UserCountOutputTypeCountSubTasksArgs
+  goals?: boolean | UserCountOutputTypeCountGoalsArgs
 }
 
 /**
@@ -484,6 +561,13 @@ export type UserCountOutputTypeCountSubTasksArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.SubTaskWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountGoalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GoalWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -491,6 +575,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   password?: boolean
   tasks?: boolean | Prisma.User$tasksArgs<ExtArgs>
   subTasks?: boolean | Prisma.User$subTasksArgs<ExtArgs>
+  goals?: boolean | Prisma.User$goalsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -516,6 +601,7 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tasks?: boolean | Prisma.User$tasksArgs<ExtArgs>
   subTasks?: boolean | Prisma.User$subTasksArgs<ExtArgs>
+  goals?: boolean | Prisma.User$goalsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -526,6 +612,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     tasks: Prisma.$TaskPayload<ExtArgs>[]
     subTasks: Prisma.$SubTaskPayload<ExtArgs>[]
+    goals: Prisma.$GoalPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -927,6 +1014,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   tasks<T extends Prisma.User$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subTasks<T extends Prisma.User$subTasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$subTasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  goals<T extends Prisma.User$goalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$goalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1392,6 +1480,30 @@ export type User$subTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.SubTaskScalarFieldEnum | Prisma.SubTaskScalarFieldEnum[]
+}
+
+/**
+ * User.goals
+ */
+export type User$goalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Goal
+   */
+  select?: Prisma.GoalSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Goal
+   */
+  omit?: Prisma.GoalOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GoalInclude<ExtArgs> | null
+  where?: Prisma.GoalWhereInput
+  orderBy?: Prisma.GoalOrderByWithRelationInput | Prisma.GoalOrderByWithRelationInput[]
+  cursor?: Prisma.GoalWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.GoalScalarFieldEnum | Prisma.GoalScalarFieldEnum[]
 }
 
 /**

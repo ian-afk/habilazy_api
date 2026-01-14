@@ -9,6 +9,7 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
+export type * from './models/Goal'
 export type * from './models/Task'
 export type * from './models/SubTask'
 export type * from './commonInputTypes'

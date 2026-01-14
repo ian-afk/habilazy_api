@@ -29,11 +29,13 @@ export type AggregateTask = {
 export type TaskAvgAggregateOutputType = {
   id: number | null
   userId: number | null
+  goalId: number | null
 }
 
 export type TaskSumAggregateOutputType = {
   id: number | null
   userId: number | null
+  goalId: number | null
 }
 
 export type TaskMinAggregateOutputType = {
@@ -41,6 +43,7 @@ export type TaskMinAggregateOutputType = {
   task: string | null
   description: string | null
   userId: number | null
+  goalId: number | null
 }
 
 export type TaskMaxAggregateOutputType = {
@@ -48,6 +51,7 @@ export type TaskMaxAggregateOutputType = {
   task: string | null
   description: string | null
   userId: number | null
+  goalId: number | null
 }
 
 export type TaskCountAggregateOutputType = {
@@ -55,6 +59,7 @@ export type TaskCountAggregateOutputType = {
   task: number
   description: number
   userId: number
+  goalId: number
   _all: number
 }
 
@@ -62,11 +67,13 @@ export type TaskCountAggregateOutputType = {
 export type TaskAvgAggregateInputType = {
   id?: true
   userId?: true
+  goalId?: true
 }
 
 export type TaskSumAggregateInputType = {
   id?: true
   userId?: true
+  goalId?: true
 }
 
 export type TaskMinAggregateInputType = {
@@ -74,6 +81,7 @@ export type TaskMinAggregateInputType = {
   task?: true
   description?: true
   userId?: true
+  goalId?: true
 }
 
 export type TaskMaxAggregateInputType = {
@@ -81,6 +89,7 @@ export type TaskMaxAggregateInputType = {
   task?: true
   description?: true
   userId?: true
+  goalId?: true
 }
 
 export type TaskCountAggregateInputType = {
@@ -88,6 +97,7 @@ export type TaskCountAggregateInputType = {
   task?: true
   description?: true
   userId?: true
+  goalId?: true
   _all?: true
 }
 
@@ -182,6 +192,7 @@ export type TaskGroupByOutputType = {
   task: string
   description: string
   userId: number
+  goalId: number
   _count: TaskCountAggregateOutputType | null
   _avg: TaskAvgAggregateOutputType | null
   _sum: TaskSumAggregateOutputType | null
@@ -212,7 +223,9 @@ export type TaskWhereInput = {
   task?: Prisma.StringFilter<"Task"> | string
   description?: Prisma.StringFilter<"Task"> | string
   userId?: Prisma.IntFilter<"Task"> | number
+  goalId?: Prisma.IntFilter<"Task"> | number
   users?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  goals?: Prisma.XOR<Prisma.GoalScalarRelationFilter, Prisma.GoalWhereInput>
   subTasks?: Prisma.SubTaskListRelationFilter
 }
 
@@ -221,7 +234,9 @@ export type TaskOrderByWithRelationInput = {
   task?: Prisma.SortOrder
   description?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  goalId?: Prisma.SortOrder
   users?: Prisma.UserOrderByWithRelationInput
+  goals?: Prisma.GoalOrderByWithRelationInput
   subTasks?: Prisma.SubTaskOrderByRelationAggregateInput
 }
 
@@ -233,7 +248,9 @@ export type TaskWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.TaskWhereInput | Prisma.TaskWhereInput[]
   description?: Prisma.StringFilter<"Task"> | string
   userId?: Prisma.IntFilter<"Task"> | number
+  goalId?: Prisma.IntFilter<"Task"> | number
   users?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  goals?: Prisma.XOR<Prisma.GoalScalarRelationFilter, Prisma.GoalWhereInput>
   subTasks?: Prisma.SubTaskListRelationFilter
 }, "id" | "task">
 
@@ -242,6 +259,7 @@ export type TaskOrderByWithAggregationInput = {
   task?: Prisma.SortOrder
   description?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  goalId?: Prisma.SortOrder
   _count?: Prisma.TaskCountOrderByAggregateInput
   _avg?: Prisma.TaskAvgOrderByAggregateInput
   _max?: Prisma.TaskMaxOrderByAggregateInput
@@ -257,12 +275,14 @@ export type TaskScalarWhereWithAggregatesInput = {
   task?: Prisma.StringWithAggregatesFilter<"Task"> | string
   description?: Prisma.StringWithAggregatesFilter<"Task"> | string
   userId?: Prisma.IntWithAggregatesFilter<"Task"> | number
+  goalId?: Prisma.IntWithAggregatesFilter<"Task"> | number
 }
 
 export type TaskCreateInput = {
   task: string
   description: string
   users: Prisma.UserCreateNestedOneWithoutTasksInput
+  goals: Prisma.GoalCreateNestedOneWithoutTasksInput
   subTasks?: Prisma.SubTaskCreateNestedManyWithoutTasksInput
 }
 
@@ -271,6 +291,7 @@ export type TaskUncheckedCreateInput = {
   task: string
   description: string
   userId: number
+  goalId: number
   subTasks?: Prisma.SubTaskUncheckedCreateNestedManyWithoutTasksInput
 }
 
@@ -278,6 +299,7 @@ export type TaskUpdateInput = {
   task?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   users?: Prisma.UserUpdateOneRequiredWithoutTasksNestedInput
+  goals?: Prisma.GoalUpdateOneRequiredWithoutTasksNestedInput
   subTasks?: Prisma.SubTaskUpdateManyWithoutTasksNestedInput
 }
 
@@ -286,6 +308,7 @@ export type TaskUncheckedUpdateInput = {
   task?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  goalId?: Prisma.IntFieldUpdateOperationsInput | number
   subTasks?: Prisma.SubTaskUncheckedUpdateManyWithoutTasksNestedInput
 }
 
@@ -294,6 +317,7 @@ export type TaskCreateManyInput = {
   task: string
   description: string
   userId: number
+  goalId: number
 }
 
 export type TaskUpdateManyMutationInput = {
@@ -306,6 +330,7 @@ export type TaskUncheckedUpdateManyInput = {
   task?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  goalId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TaskListRelationFilter = {
@@ -323,11 +348,13 @@ export type TaskCountOrderByAggregateInput = {
   task?: Prisma.SortOrder
   description?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  goalId?: Prisma.SortOrder
 }
 
 export type TaskAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  goalId?: Prisma.SortOrder
 }
 
 export type TaskMaxOrderByAggregateInput = {
@@ -335,6 +362,7 @@ export type TaskMaxOrderByAggregateInput = {
   task?: Prisma.SortOrder
   description?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  goalId?: Prisma.SortOrder
 }
 
 export type TaskMinOrderByAggregateInput = {
@@ -342,11 +370,13 @@ export type TaskMinOrderByAggregateInput = {
   task?: Prisma.SortOrder
   description?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  goalId?: Prisma.SortOrder
 }
 
 export type TaskSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  goalId?: Prisma.SortOrder
 }
 
 export type TaskScalarRelationFilter = {
@@ -396,6 +426,48 @@ export type TaskUncheckedUpdateManyWithoutUsersNestedInput = {
   deleteMany?: Prisma.TaskScalarWhereInput | Prisma.TaskScalarWhereInput[]
 }
 
+export type TaskCreateNestedManyWithoutGoalsInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutGoalsInput, Prisma.TaskUncheckedCreateWithoutGoalsInput> | Prisma.TaskCreateWithoutGoalsInput[] | Prisma.TaskUncheckedCreateWithoutGoalsInput[]
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutGoalsInput | Prisma.TaskCreateOrConnectWithoutGoalsInput[]
+  createMany?: Prisma.TaskCreateManyGoalsInputEnvelope
+  connect?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+}
+
+export type TaskUncheckedCreateNestedManyWithoutGoalsInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutGoalsInput, Prisma.TaskUncheckedCreateWithoutGoalsInput> | Prisma.TaskCreateWithoutGoalsInput[] | Prisma.TaskUncheckedCreateWithoutGoalsInput[]
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutGoalsInput | Prisma.TaskCreateOrConnectWithoutGoalsInput[]
+  createMany?: Prisma.TaskCreateManyGoalsInputEnvelope
+  connect?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+}
+
+export type TaskUpdateManyWithoutGoalsNestedInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutGoalsInput, Prisma.TaskUncheckedCreateWithoutGoalsInput> | Prisma.TaskCreateWithoutGoalsInput[] | Prisma.TaskUncheckedCreateWithoutGoalsInput[]
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutGoalsInput | Prisma.TaskCreateOrConnectWithoutGoalsInput[]
+  upsert?: Prisma.TaskUpsertWithWhereUniqueWithoutGoalsInput | Prisma.TaskUpsertWithWhereUniqueWithoutGoalsInput[]
+  createMany?: Prisma.TaskCreateManyGoalsInputEnvelope
+  set?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+  disconnect?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+  delete?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+  connect?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+  update?: Prisma.TaskUpdateWithWhereUniqueWithoutGoalsInput | Prisma.TaskUpdateWithWhereUniqueWithoutGoalsInput[]
+  updateMany?: Prisma.TaskUpdateManyWithWhereWithoutGoalsInput | Prisma.TaskUpdateManyWithWhereWithoutGoalsInput[]
+  deleteMany?: Prisma.TaskScalarWhereInput | Prisma.TaskScalarWhereInput[]
+}
+
+export type TaskUncheckedUpdateManyWithoutGoalsNestedInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutGoalsInput, Prisma.TaskUncheckedCreateWithoutGoalsInput> | Prisma.TaskCreateWithoutGoalsInput[] | Prisma.TaskUncheckedCreateWithoutGoalsInput[]
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutGoalsInput | Prisma.TaskCreateOrConnectWithoutGoalsInput[]
+  upsert?: Prisma.TaskUpsertWithWhereUniqueWithoutGoalsInput | Prisma.TaskUpsertWithWhereUniqueWithoutGoalsInput[]
+  createMany?: Prisma.TaskCreateManyGoalsInputEnvelope
+  set?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+  disconnect?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+  delete?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+  connect?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+  update?: Prisma.TaskUpdateWithWhereUniqueWithoutGoalsInput | Prisma.TaskUpdateWithWhereUniqueWithoutGoalsInput[]
+  updateMany?: Prisma.TaskUpdateManyWithWhereWithoutGoalsInput | Prisma.TaskUpdateManyWithWhereWithoutGoalsInput[]
+  deleteMany?: Prisma.TaskScalarWhereInput | Prisma.TaskScalarWhereInput[]
+}
+
 export type TaskCreateNestedOneWithoutSubTasksInput = {
   create?: Prisma.XOR<Prisma.TaskCreateWithoutSubTasksInput, Prisma.TaskUncheckedCreateWithoutSubTasksInput>
   connectOrCreate?: Prisma.TaskCreateOrConnectWithoutSubTasksInput
@@ -413,6 +485,7 @@ export type TaskUpdateOneRequiredWithoutSubTasksNestedInput = {
 export type TaskCreateWithoutUsersInput = {
   task: string
   description: string
+  goals: Prisma.GoalCreateNestedOneWithoutTasksInput
   subTasks?: Prisma.SubTaskCreateNestedManyWithoutTasksInput
 }
 
@@ -420,6 +493,7 @@ export type TaskUncheckedCreateWithoutUsersInput = {
   id?: number
   task: string
   description: string
+  goalId: number
   subTasks?: Prisma.SubTaskUncheckedCreateNestedManyWithoutTasksInput
 }
 
@@ -457,12 +531,55 @@ export type TaskScalarWhereInput = {
   task?: Prisma.StringFilter<"Task"> | string
   description?: Prisma.StringFilter<"Task"> | string
   userId?: Prisma.IntFilter<"Task"> | number
+  goalId?: Prisma.IntFilter<"Task"> | number
+}
+
+export type TaskCreateWithoutGoalsInput = {
+  task: string
+  description: string
+  users: Prisma.UserCreateNestedOneWithoutTasksInput
+  subTasks?: Prisma.SubTaskCreateNestedManyWithoutTasksInput
+}
+
+export type TaskUncheckedCreateWithoutGoalsInput = {
+  id?: number
+  task: string
+  description: string
+  userId: number
+  subTasks?: Prisma.SubTaskUncheckedCreateNestedManyWithoutTasksInput
+}
+
+export type TaskCreateOrConnectWithoutGoalsInput = {
+  where: Prisma.TaskWhereUniqueInput
+  create: Prisma.XOR<Prisma.TaskCreateWithoutGoalsInput, Prisma.TaskUncheckedCreateWithoutGoalsInput>
+}
+
+export type TaskCreateManyGoalsInputEnvelope = {
+  data: Prisma.TaskCreateManyGoalsInput | Prisma.TaskCreateManyGoalsInput[]
+  skipDuplicates?: boolean
+}
+
+export type TaskUpsertWithWhereUniqueWithoutGoalsInput = {
+  where: Prisma.TaskWhereUniqueInput
+  update: Prisma.XOR<Prisma.TaskUpdateWithoutGoalsInput, Prisma.TaskUncheckedUpdateWithoutGoalsInput>
+  create: Prisma.XOR<Prisma.TaskCreateWithoutGoalsInput, Prisma.TaskUncheckedCreateWithoutGoalsInput>
+}
+
+export type TaskUpdateWithWhereUniqueWithoutGoalsInput = {
+  where: Prisma.TaskWhereUniqueInput
+  data: Prisma.XOR<Prisma.TaskUpdateWithoutGoalsInput, Prisma.TaskUncheckedUpdateWithoutGoalsInput>
+}
+
+export type TaskUpdateManyWithWhereWithoutGoalsInput = {
+  where: Prisma.TaskScalarWhereInput
+  data: Prisma.XOR<Prisma.TaskUpdateManyMutationInput, Prisma.TaskUncheckedUpdateManyWithoutGoalsInput>
 }
 
 export type TaskCreateWithoutSubTasksInput = {
   task: string
   description: string
   users: Prisma.UserCreateNestedOneWithoutTasksInput
+  goals: Prisma.GoalCreateNestedOneWithoutTasksInput
 }
 
 export type TaskUncheckedCreateWithoutSubTasksInput = {
@@ -470,6 +587,7 @@ export type TaskUncheckedCreateWithoutSubTasksInput = {
   task: string
   description: string
   userId: number
+  goalId: number
 }
 
 export type TaskCreateOrConnectWithoutSubTasksInput = {
@@ -492,6 +610,7 @@ export type TaskUpdateWithoutSubTasksInput = {
   task?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   users?: Prisma.UserUpdateOneRequiredWithoutTasksNestedInput
+  goals?: Prisma.GoalUpdateOneRequiredWithoutTasksNestedInput
 }
 
 export type TaskUncheckedUpdateWithoutSubTasksInput = {
@@ -499,17 +618,20 @@ export type TaskUncheckedUpdateWithoutSubTasksInput = {
   task?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  goalId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TaskCreateManyUsersInput = {
   id?: number
   task: string
   description: string
+  goalId: number
 }
 
 export type TaskUpdateWithoutUsersInput = {
   task?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  goals?: Prisma.GoalUpdateOneRequiredWithoutTasksNestedInput
   subTasks?: Prisma.SubTaskUpdateManyWithoutTasksNestedInput
 }
 
@@ -517,6 +639,7 @@ export type TaskUncheckedUpdateWithoutUsersInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   task?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  goalId?: Prisma.IntFieldUpdateOperationsInput | number
   subTasks?: Prisma.SubTaskUncheckedUpdateManyWithoutTasksNestedInput
 }
 
@@ -524,6 +647,36 @@ export type TaskUncheckedUpdateManyWithoutUsersInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   task?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  goalId?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
+export type TaskCreateManyGoalsInput = {
+  id?: number
+  task: string
+  description: string
+  userId: number
+}
+
+export type TaskUpdateWithoutGoalsInput = {
+  task?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  users?: Prisma.UserUpdateOneRequiredWithoutTasksNestedInput
+  subTasks?: Prisma.SubTaskUpdateManyWithoutTasksNestedInput
+}
+
+export type TaskUncheckedUpdateWithoutGoalsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  task?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  subTasks?: Prisma.SubTaskUncheckedUpdateManyWithoutTasksNestedInput
+}
+
+export type TaskUncheckedUpdateManyWithoutGoalsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  task?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -562,7 +715,9 @@ export type TaskSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   task?: boolean
   description?: boolean
   userId?: boolean
+  goalId?: boolean
   users?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  goals?: boolean | Prisma.GoalDefaultArgs<ExtArgs>
   subTasks?: boolean | Prisma.Task$subTasksArgs<ExtArgs>
   _count?: boolean | Prisma.TaskCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["task"]>
@@ -572,7 +727,9 @@ export type TaskSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   task?: boolean
   description?: boolean
   userId?: boolean
+  goalId?: boolean
   users?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  goals?: boolean | Prisma.GoalDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["task"]>
 
 export type TaskSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -580,7 +737,9 @@ export type TaskSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   task?: boolean
   description?: boolean
   userId?: boolean
+  goalId?: boolean
   users?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  goals?: boolean | Prisma.GoalDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["task"]>
 
 export type TaskSelectScalar = {
@@ -588,25 +747,30 @@ export type TaskSelectScalar = {
   task?: boolean
   description?: boolean
   userId?: boolean
+  goalId?: boolean
 }
 
-export type TaskOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "task" | "description" | "userId", ExtArgs["result"]["task"]>
+export type TaskOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "task" | "description" | "userId" | "goalId", ExtArgs["result"]["task"]>
 export type TaskInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  goals?: boolean | Prisma.GoalDefaultArgs<ExtArgs>
   subTasks?: boolean | Prisma.Task$subTasksArgs<ExtArgs>
   _count?: boolean | Prisma.TaskCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TaskIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  goals?: boolean | Prisma.GoalDefaultArgs<ExtArgs>
 }
 export type TaskIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  goals?: boolean | Prisma.GoalDefaultArgs<ExtArgs>
 }
 
 export type $TaskPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Task"
   objects: {
     users: Prisma.$UserPayload<ExtArgs>
+    goals: Prisma.$GoalPayload<ExtArgs>
     subTasks: Prisma.$SubTaskPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -614,6 +778,7 @@ export type $TaskPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     task: string
     description: string
     userId: number
+    goalId: number
   }, ExtArgs["result"]["task"]>
   composites: {}
 }
@@ -1009,6 +1174,7 @@ readonly fields: TaskFieldRefs;
 export interface Prisma__TaskClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   users<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  goals<T extends Prisma.GoalDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GoalDefaultArgs<ExtArgs>>): Prisma.Prisma__GoalClient<runtime.Types.Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   subTasks<T extends Prisma.Task$subTasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Task$subTasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1043,6 +1209,7 @@ export interface TaskFieldRefs {
   readonly task: Prisma.FieldRef<"Task", 'String'>
   readonly description: Prisma.FieldRef<"Task", 'String'>
   readonly userId: Prisma.FieldRef<"Task", 'Int'>
+  readonly goalId: Prisma.FieldRef<"Task", 'Int'>
 }
     
 
