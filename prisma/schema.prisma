@@ -21,6 +21,17 @@ model User {
 
   tasks    Task[]
   subTasks SubTask[]
+  goals    Goal[]
+}
+
+model Goal {
+  id          Int      @id @default(autoincrement())
+  title       String   @unique
+  description String
+  userId      Int
+  users       User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  tasks       Task[]
 }
 
 model Task {
@@ -29,6 +40,8 @@ model Task {
   description String
   userId      Int
   users       User      @relation(fields: [userId], references: [id])
+  goalId      Int
+  goals       Goal      @relation(fields: [goalId], references: [id])
   subTasks    SubTask[]
 }
 
