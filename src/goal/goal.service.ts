@@ -6,7 +6,7 @@ import { UpdateGoalDto } from './dto/update-goal.dto';
 @Injectable()
 export class GoalService {
   constructor(private readonly goalRepo: GoalRepository) {}
-  async findAllTask() {
+  async listAllTask() {
     return await this.goalRepo.findAll();
   }
 
