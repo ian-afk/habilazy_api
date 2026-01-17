@@ -5,6 +5,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { TaskModule } from './task/task.module';
 import { SubtaskModule } from './subtask/subtask.module';
 import { GoalModule } from './goal/goal.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { GoalModule } from './goal/goal.module';
     TaskModule,
     SubtaskModule,
     GoalModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
