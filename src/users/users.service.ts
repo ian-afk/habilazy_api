@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { UsersRepository } from './repositories/users.repository';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -73,5 +74,13 @@ export class UsersService {
     return {
       message: `User deleted successfully`,
     };
+  }
+
+  async findUserByEmail(email: string) {
+    const user = await this.userRepo.findByEmail(email);
+
+    if (!user) throw new UnauthorizedException('Invalid username or password');
+
+    return user;
   }
 }
