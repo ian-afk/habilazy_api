@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import { AuthDto } from './dto/auth-dto';
@@ -32,5 +36,24 @@ export class AuthService {
         token,
       };
     }
+  }
+
+  async signUp(email: string, password: string): Promise<{ token: string }> {
+    const findEmail = await this.userService.findUserByEmail(email);
+
+    if (findEmail) throw new HttpException('Email already exits', 409);
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const user = await this.userService.createUser({
+      email,
+      password: hashedPassword,
+    });
+
+    const token = await this.jwtServie.signAsync({
+      sub: user.id,
+      email,
+    });
+
+    return { token };
   }
 }
