@@ -11,4 +11,7 @@ export class CreateTaskDto {
   @IsNotEmpty()
   @IsNumber()
   userId: number;
+
+  @IsNotEmpty()
+  goalId: number;
 }
