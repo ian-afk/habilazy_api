@@ -6,8 +6,8 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 
 @Module({
-  imports: [PassportModule.register({ session: false }), UsersService],
-  providers: [UsersService, JwtStrategy, AuthService],
+  imports: [PassportModule.register({ session: false })],
+  providers: [UsersService, JwtStrategy, AuthService, UsersService],
   controllers: [AuthController],
 })
 export class AuthModule {}
