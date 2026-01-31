@@ -7,53 +7,55 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import { AuthDto } from './dto/auth-dto';
 import bcrypt from 'bcryptjs';
+import { UsersRepository } from 'src/users/repositories/users.repository';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly jwtServie: JwtService,
+    private readonly jwtService: JwtService,
     private readonly userService: UsersService,
+    private readonly userRepo: UsersRepository,
   ) {}
 
+  signToken = (id: string, email: string) => {
+    const payload = { sub: id, email };
+    return this.jwtService.signAsync(payload);
+  };
   async signin(authDto: AuthDto) {
-    const user = await this.userService.findUserByEmail(authDto.email);
+    const { email, password } = authDto;
+    const user = await this.userRepo.findByEmail(email);
 
-    if (user) {
-      const isPasswordCorrect = await bcrypt.compare(
-        authDto.password,
-        user.password,
-      );
-
-      if (!isPasswordCorrect)
-        throw new UnauthorizedException('Invalid email or password');
-
-      const token = await this.jwtServie.signAsync({
-        sub: user.id,
-        email: authDto.email,
-      });
-
-      return {
-        token,
-      };
+    if (!user) {
+      throw new UnauthorizedException('Invalid email or password');
     }
-  }
 
-  async signUp(email: string, password: string): Promise<{ token: string }> {
-    const findEmail = await this.userService.findUserByEmail(email);
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
-    if (findEmail) throw new HttpException('Email already exits', 409);
+    if (!isPasswordCorrect) {
+      throw new UnauthorizedException('Invalid email or password');
+    }
 
-    const hashedPassword = await bcrypt.hash(password, 12);
-    const user = await this.userService.createUser({
-      email,
-      password: hashedPassword,
-    });
-
-    const token = await this.jwtServie.signAsync({
-      sub: user.id,
-      email,
-    });
+    const token = await this.signToken(user.id.toString(), user.email);
 
     return { token };
+  }
+
+  async signUp(email: string, password: string) {
+    try {
+      const findEmail = await this.userRepo.findByEmail(email);
+
+      if (findEmail) throw new HttpException('Email already exits', 409);
+
+      const user = await this.userService.createUser({
+        email,
+        password,
+      });
+
+      const token = await this.signToken(String(user.id), user.email);
+
+      return token;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
