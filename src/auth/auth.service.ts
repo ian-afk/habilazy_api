@@ -53,7 +53,9 @@ export class AuthService {
 
       const token = await this.signToken(String(user.id), user.email);
 
-      return token;
+      return {
+        token,
+      };
     } catch (error) {
       console.log(error);
     }

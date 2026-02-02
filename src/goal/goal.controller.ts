@@ -17,22 +17,35 @@ export class GoalController {
 
   @Get()
   async getAllGoal() {
-    return await this.goalService.listAllTask();
+    const goals = await this.goalService.listAllTask();
+    if (goals.length === 0)
+      return { success: true, message: 'No record goals found' };
+    return {
+      success: true,
+      data: goals,
+    };
   }
 
   @Post()
   async createGoal(@Body() createGoalDto: CreateGoalDto) {
-    return await this.goalService.createGoal(createGoalDto);
+    const goals = await this.goalService.createGoal(createGoalDto);
+    return {
+      success: true,
+      data: goals,
+    };
   }
 
   @Get('/:id')
   async getGoalById(@Param('id') id: string) {
     const goal = await this.goalService.findGoalById(Number(id));
 
-    return goal;
+    return {
+      success: true,
+      data: goal,
+    };
   }
 
-  @Patch('/id')
+  @Patch('/:id')
   async updateGoal(
     @Param('id') id: string,
     @Body() updateGoalDto: UpdateGoalDto,
@@ -42,7 +55,10 @@ export class GoalController {
       updateGoalDto,
     );
 
-    return goal;
+    return {
+      success: true,
+      data: goal,
+    };
   }
 
   @Delete('/:id')
