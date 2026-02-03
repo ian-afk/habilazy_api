@@ -8,5 +8,6 @@ import { GoalRepository } from './repositories/goal.repository';
   imports: [PrismaModule],
   providers: [GoalService, GoalRepository],
   controllers: [GoalController],
+  exports: [GoalService, GoalModule],
 })
 export class GoalModule {}
