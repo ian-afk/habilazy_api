@@ -26,31 +26,37 @@ model User {
 
 model Goal {
   id          Int      @id @default(autoincrement())
-  title       String   @unique
+  title       String
   description String
   userId      Int
   users       User     @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now())
   tasks       Task[]
+
+  @@unique([userId, title]) // ✅ title unique per user
 }
 
 model Task {
   id          Int       @id @default(autoincrement())
-  task        String    @unique
+  task        String
   description String
   userId      Int
   users       User      @relation(fields: [userId], references: [id])
   goalId      Int
   goals       Goal      @relation(fields: [goalId], references: [id])
   subTasks    SubTask[]
+
+  @@unique([userId, task]) // ✅ task unique per user
 }
 
 model SubTask {
   id          Int     @id @default(autoincrement())
-  task        String  @unique
+  task        String
   description String?
   taskId      Int
   tasks       Task    @relation(fields: [taskId], references: [id])
   userId      Int
   users       User    @relation(fields: [userId], references: [id])
+
+  @@unique([userId, task]) // ✅ subtask name unique per user
 }
