@@ -1,11 +1,14 @@
 import {
   BadRequestException,
+  ConflictException,
+  HttpException,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { TaskRepository } from './repositories/task.repository';
 import { CreateTaskDto } from './dto/create-task.dto';
-import { Task } from 'src/prisma/prisma.client';
+import { Prisma, Task } from 'src/prisma/prisma.client';
 
 import { UpdateTaskDto } from './dto/update-task.dto';
 
@@ -23,16 +26,41 @@ export class TaskService {
   }
 
   async createTask(createTaskDto: CreateTaskDto) {
-    const goalId = createTaskDto.goalId;
-    const findGoal = await this.goalRepo.findById(goalId);
-    if (!findGoal)
-      throw new NotFoundException(`Goal ID: ${goalId} does not exists`);
-    const isTaskExists = await this.taskRepo.find({
-      task: createTaskDto.task,
-    });
+    try {
+      const goalId = createTaskDto.goalId;
+      const findGoal = await this.goalRepo.findById(goalId);
+      if (!findGoal)
+        throw new NotFoundException(`Goal ID: ${goalId} does not exists`);
 
-    if (isTaskExists) throw new BadRequestException('Task name already exists');
-    return await this.taskRepo.create(createTaskDto);
+      return await this.taskRepo.create(createTaskDto);
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        switch (error.code) {
+          case 'P2002': {
+            throw new ConflictException(`Task already existing`);
+          }
+
+          case 'P2003': {
+            throw new BadRequestException(
+              `Invalid reference (foreign key constraint).`,
+            );
+          }
+
+          case 'P2025': {
+            throw new NotFoundException(`Record not found.`);
+          }
+
+          default:
+            throw new BadRequestException(`Database error: ${error.code}`);
+        }
+      }
+      if (error instanceof Prisma.PrismaClientValidationError) {
+        throw new BadRequestException(`Invalid input data.`);
+      }
+      throw new InternalServerErrorException(`Unexpected error.`);
+    }
   }
 
   async findTaskById(id: number): Promise<Task | null> {
